@@ -1169,6 +1169,10 @@
       height: auto;
       display: block;
       aspect-ratio: auto 4/3; /* réserve l'espace avant chargement, écrasé par les dimensions réelles */
+      /* Limite la hauteur pour éviter les images plein-écran sur les visuels portait/carré */
+      max-height: 62vh;
+      object-fit: contain;
+      object-position: center;
     }
     .modal-img figcaption {
       padding: 0.7rem 1rem;
@@ -3740,7 +3744,7 @@
               <p>Durbin-Watson DW = 2,50 (résidus indépendants) · Shapiro-Wilk p = 0,607 (normalité validée) · Grubbs G &lt; 1,887 (aucune valeur aberrante) · Breusch-Pagan p = 0,45 (variance constante).</p>
             </div>
           </div>
-          <figure class="modal-img">
+          <figure class="modal-img" style="max-width:560px;margin-left:auto;margin-right:auto;">
             <img src="images/Courbe_etalonnage_spectro2.png" alt="Courbe d'étalonnage de l'absorbance" loading="lazy" decoding="async">
             <figcaption data-i18n="fig.spectro.etalon">Courbe d'étalonnage de l'absorbance — R² ≈ 0,998 (linéarité Beer-Lambert validée)</figcaption>
           </figure>
