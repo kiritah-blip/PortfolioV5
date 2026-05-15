@@ -526,6 +526,22 @@
       .carousel-item              { backface-visibility: visible; -webkit-backface-visibility: visible; }
     }
 
+    /* ── Langue allemande : mots composés longs — césure auto + police réduite ── */
+    /* hyphens: auto utilise le dictionnaire de l'élément html[lang="de"]          */
+    html[lang="de"] .carousel-scene .card-title,
+    html[lang="de"] .carousel-scene .card-desc {
+      hyphens: auto;
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 480px) {
+      html[lang="de"] .carousel-scene .card-title { font-size: 0.70rem; }
+      html[lang="de"] .carousel-scene .card-desc  { font-size: 0.68rem; }
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      html[lang="de"] .carousel-scene .card-title { font-size: 0.75rem; }
+      html[lang="de"] .carousel-scene .card-desc  { font-size: 0.72rem; }
+    }
+
     /* ── CONTENT-VISIBILITY : saute le layout/paint des sections hors viewport ── */
     /* contain-intrinsic-size: auto → mémorise la vraie hauteur après 1er rendu  */
     /* Jamais sur #accueil (above-fold) — uniquement les sections hors-fold       */
@@ -6810,11 +6826,15 @@
         document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
           var key = el.dataset.i18nHtml;
           var v = T[lang][key];
+          /* Préserver le compteur de barre de compétence (injecté par le script
+             skill-bars) : setLang remplace innerHTML et le détruirait sinon      */
+          var savedCount = el.querySelector('.skill-count');
           if (v !== undefined) {
             el.innerHTML = v;
           } else if (_origHtml[key] !== undefined) {
             el.innerHTML = _origHtml[key]; // fallback FR
           }
+          if (savedCount) el.appendChild(savedCount); // réinjecter le compteur
         });
 
         // Placeholders (data-i18n-placeholder)
