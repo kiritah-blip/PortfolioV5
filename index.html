@@ -527,11 +527,17 @@
     }
 
     /* ── Langue allemande : mots composés longs — césure auto + police réduite ── */
-    /* hyphens: auto utilise le dictionnaire de l'élément html[lang="de"]          */
+    /* -webkit-hyphens requis sur iOS/Safari ; hyphens seul ignoré par WebKit      */
     html[lang="de"] .carousel-scene .card-title,
     html[lang="de"] .carousel-scene .card-desc {
+      -webkit-hyphens: auto;
       hyphens: auto;
       overflow-wrap: break-word;
+      word-break: break-word;   /* fallback : coupe sans trait d'union si nécessaire */
+    }
+    /* Empêcher tout débordement hors carte (iOS : overflow:hidden buggy sur 3D) */
+    html[lang="de"] .carousel-scene .carousel-item {
+      clip-path: inset(0 round 0px);   /* force le clipping même avec transform 3D */
     }
     @media (max-width: 480px) {
       html[lang="de"] .carousel-scene .card-title { font-size: 0.70rem; }
